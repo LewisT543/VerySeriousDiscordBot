@@ -9,24 +9,15 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.security.auth.login.LoginException;
 
-public class App extends ListenerAdapter {
+public class App {
 
     public static void main( String[] args ) {
         try {
-            JDA jdaBuilder = JDABuilder.createDefault(PropertyManager.getToken()).build();
+            JDA jdaBuilder = JDABuilder.createDefault(PropertyManager.getToken())
+                    .addEventListeners(new Clairvoyant())
+                    .build();
         } catch (LoginException e) {
             e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if(!event.getAuthor().isBot()) {
-            if(event.getMessage().getContentRaw().equals("!ping")) {
-                event.getChannel().sendMessage("pong!").queue();
-            }
-        } else {
-            System.err.println("Bot calling server...");
         }
     }
 }
