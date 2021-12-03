@@ -93,7 +93,6 @@ modules.xml
 .idea/sonarlint
 .idea/vcs.xml
 .idea/modules.xml
-TheUltimateDiscordBot.iml
+VerySeriousDiscordBot.iml
 *.properties
-*.properties
-*.properties
+/target/
