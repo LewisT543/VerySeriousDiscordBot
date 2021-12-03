@@ -14,6 +14,7 @@ public class App extends ListenerAdapter {
     public static void main( String[] args ) {
         try {
             JDA jdaBuilder = JDABuilder.createDefault(PropertyManager.getToken()).build();
+
         } catch (LoginException e) {
             e.printStackTrace();
         }
