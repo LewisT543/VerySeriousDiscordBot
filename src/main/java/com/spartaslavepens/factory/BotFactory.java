@@ -1,7 +1,6 @@
 package com.spartaslavepens.factory;
 
-import com.spartaslavepens.CommandRunner;
-import com.spartaslavepens.demotivator.DemotivatorMain;
+import com.spartaslavepens.demotivator.Demotivator;
 import com.spartaslavepens.pingpong.PingPong;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -19,7 +18,7 @@ public class BotFactory {
                 new PingPong().start(event);
                 break;
             case "!demotivate":
-                new DemotivatorMain().start(event);
+                new Demotivator().start(event);
                 break;
             case "!dan":
                 new PingPong().start(event);
