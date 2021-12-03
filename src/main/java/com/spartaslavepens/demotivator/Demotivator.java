@@ -1,6 +1,8 @@
 package com.spartaslavepens.demotivator;
 
 import com.spartaslavepens.CommandRunner;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,6 +13,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class Demotivator implements CommandRunner {
     private static final HttpClient client = HttpClient.newHttpClient();
@@ -22,12 +27,29 @@ public class Demotivator implements CommandRunner {
     }
 
     private void sendDemotivatingResponse(MessageReceivedEvent event) {
-        String name = event.getAuthor().getName();
-        String negMessage = getDemotivationalMessage();
-        event.getChannel().sendMessage(buildResponseString(name, negMessage)).queue();
+        Guild guild = event.getGuild();
+        List<Member> users = guild.getMembers();
+
+        String name = Objects.requireNonNull(event.getGuild().getMember(event.getAuthor())).getEffectiveName();
+        String message = event.getMessage().getContentRaw();
+        String targetName = name;
+
+        String[] splitMessage = message.split(" ");
+        if (splitMessage.length > 1) {
+            for (Member member : users) {
+                if (member.getEffectiveName().equals(splitMessage[1]))
+                    targetName = "<@" + member.getId() + ">";
+            }
+        }
+        List<String> negMessage = new ArrayList<>(getDemotivationalMessage());
+        System.out.println("Quote Author: " + negMessage.get(1));
+        if (negMessage.get(1).equals("\n - unknown")) {
+            negMessage.set(1, "\n - " + Objects.requireNonNull(event.getGuild().getMember(event.getAuthor())).getEffectiveName());
+        }
+        event.getChannel().sendMessage(buildResponseString(targetName, negMessage.get(0), negMessage.get(1))).queue();
     }
 
-    private String getDemotivationalMessage() {
+    private List<String> getDemotivationalMessage() {
         HttpRequest request = HttpRequest.newBuilder(
                     URI.create("https://demotivational-quotes-api.herokuapp.com/api/quotes/random"))
                 .header("accept", "application/json")
@@ -40,7 +62,7 @@ public class Demotivator implements CommandRunner {
         return parseResponse(httpResponse.body());
     }
 
-    private static String parseResponse(String body) {
+    private static List<String> parseResponse(String body) {
         String quote = "When you try your best but you dont succeed, just stop and cry.";
         String author = " - Straight off the dome.";
         try {
@@ -52,13 +74,13 @@ public class Demotivator implements CommandRunner {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return quote + author;
+        return List.of(quote, author);
     }
 
-    private static String buildResponseString(String name, String negMessage) {
+    private static String buildResponseString(String name, String quote, String author) {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n***Dear ").append(name).append("***").append("\n\n```").append(negMessage)
-                .append("```").append("\nYours Sincerely, \n _ - Very Serious Discord Bot_");
+        sb.append("\n***Dear ").append(name).append("***").append("\n\n```").append(quote).append(author)
+                .append("```").append("\nYours Sincerely, \n _ - Very Serious Discord Bot_ xoxo");
         return sb.toString();
     }
 
