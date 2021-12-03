@@ -2,12 +2,14 @@ package com.spartaslavepens.factory;
 
 import com.spartaslavepens.demotivator.Demotivator;
 import com.spartaslavepens.pingpong.PingPong;
+import com.spartaslavepens.utils.CommandErrorHandler;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class BotFactory {
-
     public static void runBot(MessageReceivedEvent event) {
         String command = event.getMessage().getContentRaw().split(" ")[0];
+
+        System.out.println("command: " + command);
 
         switch (command) {
             case "!ping":
@@ -24,7 +26,8 @@ public class BotFactory {
                 new PingPong().start(event);
                 break;
             default:
-                //handle parsing error here
+                new CommandErrorHandler().start(event);
+                break;
         }
     }
 }

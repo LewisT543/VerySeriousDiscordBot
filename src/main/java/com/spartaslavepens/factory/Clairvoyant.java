@@ -9,6 +9,7 @@ public class Clairvoyant extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        BotFactory.runBot(event);
+        if (!event.getAuthor().isBot())
+            BotFactory.runBot(event);
     }
 }
