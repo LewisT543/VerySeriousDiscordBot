@@ -15,7 +15,7 @@ public class BotFactory {
                 //do something
                 new PingPong().start(event);
                 break;
-            case "!natasha":
+            case "!hg":
                 new HGRunner().start(event);
                 break;
             case "!demotivate":

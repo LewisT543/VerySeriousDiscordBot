@@ -11,6 +11,10 @@ public class Tournament {
         contestants = new ArrayList<>();
     }
 
+    public void addContestants(String contestantNames) {
+        
+    }
+
     public void addContestant(String contestantName) {
         contestants.add(new Contestant(contestantName));
     }
