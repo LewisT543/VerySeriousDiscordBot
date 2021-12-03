@@ -31,10 +31,10 @@ public class DemotivatorMain implements CommandRunner {
                 .build();
         try {
             httpResponse = getClient().send(request, HttpResponse.BodyHandlers.ofString());
-            return httpResponse.body();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+        return httpResponse.body();
     }
 
     public static HttpClient getClient() {
