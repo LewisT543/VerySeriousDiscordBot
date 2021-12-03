@@ -27,13 +27,10 @@ public class Demotivator implements CommandRunner {
     }
 
     private void sendDemotivatingResponse(MessageReceivedEvent event) {
-        Guild guild = event.getGuild();
-        List<Member> users = guild.getMembers();
-
-        String name = Objects.requireNonNull(event.getGuild().getMember(event.getAuthor())).getEffectiveName();
+        List<Member> users = event.getGuild().getMembers();
+        String name = event.getGuild().getMember(event.getAuthor()).getEffectiveName();
         String message = event.getMessage().getContentRaw();
         String targetName = name;
-
         String[] splitMessage = message.split(" ");
         if (splitMessage.length > 1) {
             for (Member member : users) {
@@ -42,7 +39,6 @@ public class Demotivator implements CommandRunner {
             }
         }
         List<String> negMessage = new ArrayList<>(getDemotivationalMessage());
-        System.out.println("Quote Author: " + negMessage.get(1));
         if (negMessage.get(1).equals("\n - unknown")) {
             negMessage.set(1, "\n - " + Objects.requireNonNull(event.getGuild().getMember(event.getAuthor())).getEffectiveName());
         }
