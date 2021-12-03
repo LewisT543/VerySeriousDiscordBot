@@ -1,5 +1,6 @@
 package com.spartaslavepens;
 
+import com.spartaslavepens.factory.Clairvoyant;
 import com.spartaslavepens.utils.PropertyManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
