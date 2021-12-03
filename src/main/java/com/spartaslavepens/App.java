@@ -8,6 +8,7 @@ import javax.security.auth.login.LoginException;
 
 public class App {
     public static JDA jda;
+
     public static void main( String[] args ) {
         try {
             jda = JDABuilder.createDefault(PropertyManager.getToken()).build();
