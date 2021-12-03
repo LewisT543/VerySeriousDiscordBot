@@ -1,11 +1,11 @@
-package com.spartaslavepens.demotivator;
+package com.spartaslavepens.pingpong;
 
 import com.spartaslavepens.CommandRunner;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class DemotivatorMain implements CommandRunner {
+public class PingPong implements CommandRunner {
     @Override
     public void start(MessageReceivedEvent event) {
-
+        event.getChannel().sendMessage("pong").queue();
     }
 }
