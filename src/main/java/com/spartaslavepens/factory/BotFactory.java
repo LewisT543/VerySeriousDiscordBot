@@ -13,22 +13,11 @@ public class BotFactory {
         System.out.println("command: " + command);
 
         switch (command) {
-            case "!ping":
-                //do something
-                new PingPong().start(event);
-                break;
-            case "!hg":
-                new HGRunner().start(event);
-                break;
-            case "!demotivate":
-                new Demotivator().start(event);
-                break;
-            case "!dan":
-                new PingPong().start(event);
-                break;
-            default:
-                new CommandErrorHandler().start(event);
-                break;
+//            case "!ping" -> new PingPong().start(event);
+//            case "!hg" -> new HGRunner().start(event);
+            case "!demotivate" -> Demotivator.getInstance().start(event);
+//            case "!dan" -> new PingPong().start(event);
+            default -> new CommandErrorHandler().start(event);
         }
     }
 }

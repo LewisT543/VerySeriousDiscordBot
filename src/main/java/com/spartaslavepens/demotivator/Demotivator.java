@@ -18,8 +18,18 @@ import java.util.List;
 import java.util.Objects;
 
 public class Demotivator implements CommandRunner {
+    private static Demotivator INSTANCE;
     private static final HttpClient client = HttpClient.newHttpClient();
     private static HttpResponse<String> httpResponse = null;
+
+    private Demotivator() {
+    }
+
+    public static Demotivator getInstance() {
+        if (INSTANCE == null)
+            INSTANCE = new Demotivator();
+        return INSTANCE;
+    }
 
     @Override
     public void start(MessageReceivedEvent event) {
