@@ -15,6 +15,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class Demotivator implements CommandRunner {
@@ -44,7 +45,7 @@ public class Demotivator implements CommandRunner {
         String[] splitMessage = message.split(" ");
         if (splitMessage.length > 1) {
             for (Member member : users) {
-                if (member.getEffectiveName().equals(splitMessage[1]))
+                if (member.getEffectiveName().toLowerCase(Locale.ROOT).equals(splitMessage[1].toLowerCase(Locale.ROOT)))
                     targetName = "<@" + member.getId() + ">";
             }
         }
